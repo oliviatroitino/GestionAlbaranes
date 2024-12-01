@@ -23,16 +23,16 @@ export default function LoginPage() {
             <h1>Login/Signup</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input type="email" placeholder="Introduce Email" {...register("email")} />
                     <p>{errors.email && errors.email?.message}</p>
                 </div>
                 <div>
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" placeholder="Introduce Password" {...register("password")} />
                     <p>{errors.password && errors.password?.message}</p>
                 </div>
-                <button type="submit">Login/Signup</button>
+                <button type="submit">Return</button>
             </form>
         </div>
     )
