@@ -5,7 +5,16 @@ import useClients from '@/app/utils/getClients'
 
 export default function ClientList() {
     const router = useRouter()
-    const clients = useClients()
+    const { clients, refetch } = useClients()
+
+    useEffect(() => {
+        const handleClientAdded = () => {
+            refetch()
+        }
+
+        window.addEventListener('clientAdded', handleClientAdded)
+        return () => window.removeEventListener('clientAdded', handleClientAdded)
+    }, [refetch])
 
     return (
         <div className="w-64 bg-gray-800 h-screen">

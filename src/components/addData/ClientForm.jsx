@@ -20,7 +20,7 @@ const SignSquema = yup.object().shape({
     logo: yup.string().optional().default('https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg')
 })
 
-export default function ClientForm({url = 'client', method = 'POST', client = null}) {
+export default function ClientForm({url = 'client', method = 'POST', client = null, onSuccessfulSubmit}) {
     const router = useRouter()
     const {
         register,
@@ -46,7 +46,12 @@ export default function ClientForm({url = 'client', method = 'POST', client = nu
                 console.log('Client added successfully')
                 alert('Client added successfully')
                 window.dispatchEvent(new Event('clientAdded'))
-                router.push(client ? `/home/clients/${client._id}` : '/home/clients')
+                if (onSuccessfulSubmit) {
+                    onSuccessfulSubmit()
+                }
+                if (!client) {
+                    router.push('/home/clients')
+                }
             }
         } catch (error) {
             console.error('Error with POST client request:', error);

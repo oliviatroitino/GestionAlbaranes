@@ -71,7 +71,12 @@ export default function ClientPage({ params }) {
                 {isEditing ? (
                     <div className="space-y-6">
                         <p className="text-lg font-bold mb-4 text-gray-900">Edit Client</p>
-                        <ClientForm url={`client/${client._id}`} method='PUT' client={client} />
+                        <ClientForm 
+                            url={`client/${client._id}`} 
+                            method='PUT' 
+                            client={client} 
+                            onSuccessfulSubmit={() => setIsEditing(false)} 
+                        />
                     </div>
                 ) : (
                     <div className="space-y-6">
