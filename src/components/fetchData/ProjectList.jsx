@@ -19,7 +19,7 @@ export default function ProjectList() {
                                 <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Project Identifier</th>
                                 <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Email</th>
                                 <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Address</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Project Code</th>
+                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Internal Project Code</th>
                                 <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Client ID</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@ export default function ProjectList() {
                                         {project.name}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {project.projectIdentifier}
+                                        {project.projectCode}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
                                         {project.email}
@@ -43,7 +43,7 @@ export default function ProjectList() {
                                         {`${project.address.street} ${project.address.number}, ${project.address.postal} ${project.address.city}, ${project.address.province}`}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {project.projectCode}
+                                        {project.code}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
                                         {project.clientId}

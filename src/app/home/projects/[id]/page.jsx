@@ -27,7 +27,7 @@ export default function ProjectPage({ params }) {
         fetchClient()
     }, [resolvedParams.id])
 
-    async function deleteClient() {
+    async function deleteProject() {
         const token = localStorage.getItem('token')
             const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/project/${resolvedParams.id}`, {
             method: 'DELETE',
@@ -87,7 +87,7 @@ export default function ProjectPage({ params }) {
                     )}
                 </div>
             </div>
-            <button onClick={deleteClient} className="bg-red-500 text-white px-4 py-2 rounded-md">Delete Client</button>
+            <button onClick={deleteProject} className="bg-red-500 text-white px-4 py-2 rounded-md">Delete Project</button>
         </div>
     )
 }

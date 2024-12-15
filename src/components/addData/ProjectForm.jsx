@@ -17,13 +17,13 @@ const SignSquema = yup.object().shape({
         city: yup.string().required('City is required'),
         province: yup.string().required('Province is required')
     }),
-    projectCode: yup.string().required('Internal project code is required'),
+    code: yup.string().required('Internal project code is required'),
     clientId: yup.string().required('Client ID is required')
 })
 
 export default function ClientForm() {
     const router = useRouter()
-    const clients = useClients()
+    const { clients } = useClients()
     const {
         register,
         handleSubmit,
@@ -77,7 +77,7 @@ export default function ClientForm() {
 
                 <div>
                     <label htmlFor="projectCode" className="block text-sm font-medium text-gray-800">
-                        Project Identifier
+                        Project Code
                     </label>
                     <input
                         {...register('projectCode')}
@@ -167,16 +167,16 @@ export default function ClientForm() {
                 </div>
 
                 <div>
-                    <label htmlFor="projectCode" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="code" className="block text-sm font-medium text-gray-800">
                         Internal Project Code
                     </label>
                     <input
-                        {...register('projectCode')}
+                        {...register('code')}
                         type="text"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     />
-                    {errors.projectCode && (
-                        <p className="mt-1 text-sm text-red-600">{errors.projectCode.message}</p>
+                    {errors.code && (
+                        <p className="mt-1 text-sm text-red-600">{errors.code.message}</p>
                     )}
                 </div>
 
