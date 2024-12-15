@@ -1,14 +1,18 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function SideBar() {
+export default function SideBar({ onStateChange }) {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(true);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
+
+    useEffect(() => {
+        onStateChange?.(isOpen);
+    }, [isOpen, onStateChange]);
 
     return (
         <>
@@ -19,48 +23,48 @@ export default function SideBar() {
                 {isOpen ? '←' : '→'}
             </button>
             <nav className={`bg-gray-800 h-screen fixed left-0 top-16 transition-all duration-300 ${
-                isOpen ? 'w-50' : 'w-14'
+                isOpen ? 'w-64' : 'w-14'
             }`}>
                 <div className={`flex flex-col p-4 ${!isOpen && 'hidden'}`}>
                     <div className="text-white font-bold text-xl mb-8 mt-10">
-                        GestionAlbaranes
+                        DeliveryNotes
                     </div>
                     <div className="flex flex-col space-y-2">
                         <button 
-                            onClick={() => router.push('/home')}
+                            onClick={() => router.push('/home/summary')}
                             className={`text-white hover:bg-gray-700 px-3 py-2 rounded text-left ${!isOpen && 'w-16'}`}
                         >
-                            Resumen
+                            Summary
                         </button>
                         <button 
-                            onClick={() => router.push('/home/clientes')}
+                            onClick={() => router.push('/home/clients')}
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
-                            Clientes
+                            Clients
                         </button>
                         <button 
-                            onClick={() => router.push('/home/proyectos')}
+                            onClick={() => router.push('/home/projects')}
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
-                            Proyectos
+                            Projects
                         </button>
                         <button 
-                            onClick={() => router.push('/home/albaranes')}
+                            onClick={() => router.push('/home/delivery-notes')}
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
-                            Albaranes
+                            Delivery Notes
                         </button>
                         <button 
-                            onClick={() => router.push('/home/proveedores')}
+                            onClick={() => router.push('/home/suppliers')}
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
-                            Proveedores
+                            Suppliers
                         </button>
                         <button 
-                            onClick={() => router.push('/home/ajustes')}
+                            onClick={() => router.push('/home/settings')}
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
-                            Ajustes
+                            Settings
                         </button>
                     </div>
                 </div>
