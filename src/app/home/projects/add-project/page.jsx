@@ -1,5 +1,5 @@
 'use client'
-import ProjectForm from '@/components/addData/ProjectForm'
+import ProjectForm from '@/components/Forms/ProjectForm'
 
 export default function AddProjectPage() {
     return (

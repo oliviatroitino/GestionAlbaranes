@@ -31,10 +31,10 @@ export default function SideBar({ onStateChange }) {
                     </div>
                     <div className="flex flex-col space-y-2">
                         <button 
-                            onClick={() => router.push('/home/summary')}
+                            onClick={() => router.push('/home')}
                             className={`text-white hover:bg-gray-700 px-3 py-2 rounded text-left ${!isOpen && 'w-16'}`}
                         >
-                            Summary
+                            Home
                         </button>
                         <button 
                             onClick={() => router.push('/home/clients')}
@@ -53,12 +53,6 @@ export default function SideBar({ onStateChange }) {
                             className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
                         >
                             Delivery Notes
-                        </button>
-                        <button 
-                            onClick={() => router.push('/home/suppliers')}
-                            className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
-                        >
-                            Suppliers
                         </button>
                         <button 
                             onClick={() => router.push('/home/settings')}

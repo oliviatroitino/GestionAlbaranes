@@ -20,7 +20,7 @@ const SignSquema = yup.object().shape({
     logo: yup.string().optional().default('https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg')
 })
 
-export default function ClientForm() {
+export default function ClientForm({url = 'client', method = 'POST', client = null, onSuccessfulSubmit}) {
     const router = useRouter()
     const {
         register,
@@ -33,8 +33,8 @@ export default function ClientForm() {
     async function onSubmit(data) {
         const token = localStorage.getItem('token')
         try {
-            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/client', {
-                method: 'POST',
+            const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/${url}`, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -45,27 +45,31 @@ export default function ClientForm() {
             if(response.ok){
                 console.log('Client added successfully')
                 alert('Client added successfully')
-                router.push('/home/clients')
-                router.refresh()
+                window.dispatchEvent(new Event('clientAdded'))
+                if (onSuccessfulSubmit) {
+                    onSuccessfulSubmit()
+                }
+                if (!client) {
+                    router.push('/home/clients')
+                }
             }
         } catch (error) {
-            console.error('Error with POST client request:', error);
+            console.error(`Error with ${method} client request:`, error);
             alert('Error submitting form')
         }
     }
 
     return (
-        <div className="container mx-auto px-4"> 
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Add Client</h2>
+        <div className="container mx-auto px-4">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-800">
-                    Name
-                </label>
-                <p className="text-sm text-gray-500">Name of the client or company</p>
-                <input
-                    {...register('name')}
+                        Name
+                    </label>
+                    <input
+                        {...register('name')}
                     type="text"
+                    defaultValue={client?.name}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                 />
                 {errors.name && (
@@ -80,6 +84,7 @@ export default function ClientForm() {
                 <input
                     {...register('cif')}
                     type="text"
+                    defaultValue={client?.cif}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                 />
                 {errors.cif && (
@@ -97,6 +102,7 @@ export default function ClientForm() {
                             {...register('address.street')}
                             type="text"
                             placeholder="Street"
+                            defaultValue={client?.address?.street}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                         />
                         {errors.address?.street && (
@@ -108,6 +114,7 @@ export default function ClientForm() {
                             {...register('address.number')}
                             type="number"
                             placeholder="Number"
+                            defaultValue={client?.address?.number}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                         />
                         {errors.address?.number && (
@@ -119,6 +126,7 @@ export default function ClientForm() {
                             {...register('address.postal')}
                             type="number"
                             placeholder="Postal Code"
+                            defaultValue={client?.address?.postal}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                         />
                         {errors.address?.postal && (
@@ -130,6 +138,7 @@ export default function ClientForm() {
                             {...register('address.city')}
                             type="text"
                             placeholder="City"
+                            defaultValue={client?.address?.city}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                         />
                         {errors.address?.city && (
@@ -141,6 +150,7 @@ export default function ClientForm() {
                             {...register('address.province')}
                             type="text"
                             placeholder="Province"
+                            defaultValue={client?.address?.province}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                         />
                         {errors.address?.province && (
@@ -158,6 +168,7 @@ export default function ClientForm() {
                 <input
                     {...register('logo')}
                     type="text"
+                    defaultValue={client?.logo}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                 />
                 {errors.logo && (
@@ -173,6 +184,7 @@ export default function ClientForm() {
                 <textarea
                     {...register('notes')}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                    defaultValue={client?.notes}
                 />
             </div>
 

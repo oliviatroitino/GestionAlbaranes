@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import useClients from '@/app/utils/getClients'
+import useClients from '@/app/utils/useClients'
 
 export default function ClientList() {
     const router = useRouter()

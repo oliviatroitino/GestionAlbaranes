@@ -1,17 +1,17 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import useProjects from '@/app/utils/getProjects'
+import useProjects from '@/app/utils/useProjects'
 
 export default function ProjectList() {
     const router = useRouter()
-    const projects = useProjects()
+    const { projects } = useProjects()
 
     return (
         <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold mb-4 text-gray-900">Project List</h2>
             <div className="overflow-x-auto">
-                {projects.length > 0 ? (
+                {projects?.length > 0 ? (
                     <table className="min-w-full bg-white">
                         <thead>
                             <tr>
@@ -40,7 +40,7 @@ export default function ProjectList() {
                                         {project.email}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {`${project.address.street} ${project.address.number}, ${project.address.postal} ${project.address.city}, ${project.address.province}`}
+                                        {`${project.address.street} ${project.address.number}, ${project.address.postal} ${project.address.city}`}
                                     </td>
                                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
                                         {project.code}

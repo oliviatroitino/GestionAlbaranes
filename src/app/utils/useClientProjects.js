@@ -1,4 +1,4 @@
-export async function getClientProjects(clientId) {
+export async function useClientProjects(clientId) {
     try {
         const token = localStorage.getItem('token')
         const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/project/${clientId}`, {

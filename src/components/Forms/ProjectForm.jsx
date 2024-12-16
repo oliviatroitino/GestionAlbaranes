@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import useClients from '@/app/utils/getClients'
+import useClients from '@/app/utils/useClients'
 
 const SignSquema = yup.object().shape({
     name: yup.string().required('Project name is required'),
@@ -21,7 +21,7 @@ const SignSquema = yup.object().shape({
     clientId: yup.string().required('Client ID is required')
 })
 
-export default function ClientForm() {
+export default function ProjectForm({url = 'project', method = 'POST', project = null, onSuccessfulSubmit}) {
     const router = useRouter()
     const { clients } = useClients()
     const {
@@ -36,8 +36,8 @@ export default function ClientForm() {
         const token = localStorage.getItem('token')
         
         try {
-            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/project', {
-                method: 'POST',
+            const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/${url}`, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -47,8 +47,12 @@ export default function ClientForm() {
             if(response.ok){
                 console.log('Project added successfully')
                 alert('Project added successfully')
-                router.push('/home/projects')
-                router.refresh()
+                if (onSuccessfulSubmit) {
+                    onSuccessfulSubmit()
+                }
+                if (!project) {
+                    router.push('/home/projects')
+                }
             }
         } catch (error) {
             console.error('Error with POST project request:', error);
@@ -58,16 +62,15 @@ export default function ClientForm() {
 
     return (
         <div className="container mx-auto px-4"> 
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Add Project</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-800">
                         Name
                     </label>
-                    <p className="text-sm text-gray-500">Name of the project</p>
                     <input
                         {...register('name')}
                         type="text"
+                        defaultValue={project?.name}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     />
                     {errors.name && (
@@ -82,6 +85,7 @@ export default function ClientForm() {
                     <input
                         {...register('projectCode')}
                         type="text"
+                        defaultValue={project?.projectCode}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     />
                     {errors.projectCode && (
@@ -96,6 +100,7 @@ export default function ClientForm() {
                     <input
                         {...register('email')}
                         type="email"
+                        defaultValue={project?.email}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     />
                     {errors.email && (
@@ -113,6 +118,7 @@ export default function ClientForm() {
                                 {...register('address.street')}
                                 type="text"
                                 placeholder="Street"
+                                defaultValue={project?.address.street}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                             />
                             {errors.address?.street && (
@@ -124,6 +130,7 @@ export default function ClientForm() {
                                 {...register('address.number')}
                                 type="number"
                                 placeholder="Number"
+                                defaultValue={project?.address.number}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                             />
                             {errors.address?.number && (
@@ -135,6 +142,7 @@ export default function ClientForm() {
                                 {...register('address.postal')}
                                 type="number"
                                 placeholder="Postal Code"
+                                defaultValue={project?.address.postal}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                             />
                             {errors.address?.postal && (
@@ -146,6 +154,7 @@ export default function ClientForm() {
                                 {...register('address.city')}
                                 type="text"
                                 placeholder="City"
+                                defaultValue={project?.address.city}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                             />
                             {errors.address?.city && (
@@ -157,6 +166,7 @@ export default function ClientForm() {
                                 {...register('address.province')}
                                 type="text"
                                 placeholder="Province"
+                                defaultValue={project?.address.province}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                             />
                             {errors.address?.province && (
@@ -173,6 +183,7 @@ export default function ClientForm() {
                     <input
                         {...register('code')}
                         type="text"
+                        defaultValue={project?.code}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     />
                     {errors.code && (
@@ -186,9 +197,10 @@ export default function ClientForm() {
                     </label>
                     <select
                         {...register('clientId')}
+                        placeholder={project?.clientId}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
                     >
-                        <option value="">Select a client</option>
+                        <option value="">{project ? "Current: " + (clients?.find(client => client._id === project.clientId)?.name || 'Client not found'): 'Select a client'}</option>
                         {clients?.map((client) => (
                             <option key={client._id} value={client._id}>
                                 {client.name} - {client._id}

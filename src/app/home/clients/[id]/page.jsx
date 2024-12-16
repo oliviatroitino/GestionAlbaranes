@@ -1,10 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { use } from 'react'
+import { useClientProjects } from '@/app/utils/useClientProjects'
 import { useRouter } from 'next/navigation'
-import { getClientProjects } from '@/app/utils/getClientProjects'
-import Link from 'next/link'
-import ClientForm from '@/components/addData/ClientForm'
+import { use } from 'react'
+import ClientForm from '@/components/Forms/ClientForm'
 
 export default function ClientPage({ params }) {
     const resolvedParams = use(params)
@@ -29,7 +28,7 @@ export default function ClientPage({ params }) {
                 const data = await response.json()
                 setClient(data)
 
-                const projectsData = await getClientProjects(resolvedParams.id)
+                const projectsData = await useClientProjects(resolvedParams.id)
                 setProjects(projectsData)
                 setIsEditing(false)
             } catch (err) {
@@ -42,7 +41,7 @@ export default function ClientPage({ params }) {
 
     async function deleteClient() {
         const token = localStorage.getItem('token')
-            const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/client/${resolvedParams.id}`, {
+        const response = await fetch(`https://bildy-rpmaya.koyeb.app/api/client/${resolvedParams.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

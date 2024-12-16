@@ -23,5 +23,5 @@ export default function useProjects() {
         fetchProjects()
     }, [])
 
-    return projects
+    return { projects }
 }
