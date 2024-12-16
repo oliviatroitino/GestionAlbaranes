@@ -61,55 +61,58 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
     }
 
     return (
-        <div className="container mx-auto px-4"> 
+        <div className="container mx-auto px-4">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-500">
                         Name
                     </label>
                     <input
                         {...register('name')}
                         type="text"
                         defaultValue={project?.name}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                        placeholder="Enter project name"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                     />
                     {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                        <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
                     )}
                 </div>
 
                 <div>
-                    <label htmlFor="projectCode" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="projectCode" className="block text-sm font-medium text-gray-500">
                         Project Code
                     </label>
                     <input
                         {...register('projectCode')}
                         type="text"
                         defaultValue={project?.projectCode}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                        placeholder="Enter project code"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                     />
                     {errors.projectCode && (
-                        <p className="mt-1 text-sm text-red-600">{errors.projectCode.message}</p>
+                        <p className="mt-1 text-sm text-red-500">{errors.projectCode.message}</p>
                     )}
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-500">
                         Email
                     </label>
                     <input
                         {...register('email')}
                         type="email"
                         defaultValue={project?.email}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                        placeholder="Enter email"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                     />
                     {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                        <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
                     )}
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-800">
+                    <label className="block text-sm font-medium text-gray-500">
                         Project Address
                     </label>
                     <div className="grid grid-cols-6 gap-4">
@@ -119,10 +122,10 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                                 type="text"
                                 placeholder="Street"
                                 defaultValue={project?.address.street}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                             />
                             {errors.address?.street && (
-                                <p className="mt-1 text-sm text-red-600">{errors.address.street.message}</p>
+                                <p className="mt-1 text-sm text-red-500">{errors.address.street.message}</p>
                             )}
                         </div>
                         <div className="col-span-1">
@@ -131,10 +134,10 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                                 type="number"
                                 placeholder="Number"
                                 defaultValue={project?.address.number}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                             />
                             {errors.address?.number && (
-                                <p className="mt-1 text-sm text-red-600">{errors.address.number.message}</p>
+                                <p className="mt-1 text-sm text-red-500">{errors.address.number.message}</p>
                             )}
                         </div>
                         <div className="col-span-2">
@@ -143,10 +146,10 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                                 type="number"
                                 placeholder="Postal Code"
                                 defaultValue={project?.address.postal}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                             />
                             {errors.address?.postal && (
-                                <p className="mt-1 text-sm text-red-600">{errors.address.postal.message}</p>
+                                <p className="mt-1 text-sm text-red-500">{errors.address.postal.message}</p>
                             )}
                         </div>
                         <div className="col-span-3">
@@ -155,10 +158,10 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                                 type="text"
                                 placeholder="City"
                                 defaultValue={project?.address.city}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                             />
                             {errors.address?.city && (
-                                <p className="mt-1 text-sm text-red-600">{errors.address.city.message}</p>
+                                <p className="mt-1 text-sm text-red-500">{errors.address.city.message}</p>
                             )}
                         </div>
                         <div className="col-span-3">
@@ -167,38 +170,39 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                                 type="text"
                                 placeholder="Province"
                                 defaultValue={project?.address.province}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                             />
                             {errors.address?.province && (
-                                <p className="mt-1 text-sm text-red-600">{errors.address.province.message}</p>
+                                <p className="mt-1 text-sm text-red-500">{errors.address.province.message}</p>
                             )}
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <label htmlFor="code" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="code" className="block text-sm font-medium text-gray-500">
                         Internal Project Code
                     </label>
                     <input
                         {...register('code')}
                         type="text"
                         defaultValue={project?.code}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                        placeholder="Enter internal code"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                     />
                     {errors.code && (
-                        <p className="mt-1 text-sm text-red-600">{errors.code.message}</p>
+                        <p className="mt-1 text-sm text-red-500">{errors.code.message}</p>
                     )}
                 </div>
 
                 <div>
-                    <label htmlFor="clientId" className="block text-sm font-medium text-gray-800">
+                    <label htmlFor="clientId" className="block text-sm font-medium text-gray-500">
                         Client ID
                     </label>
                     <select
                         {...register('clientId')}
-                        placeholder={project?.clientId}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-500"
+                        defaultValue={project?.clientId}
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
                     >
                         <option value="">{project ? "Current: " + (clients?.find(client => client._id === project.clientId)?.name || 'Client not found'): 'Select a client'}</option>
                         {clients?.map((client) => (
@@ -208,13 +212,13 @@ export default function ProjectForm({url = 'project', method = 'POST', project =
                         ))}
                     </select>
                     {errors.clientId && (
-                        <p className="mt-1 text-sm text-red-600">{errors.clientId.message}</p>
+                        <p className="mt-1 text-sm text-red-500">{errors.clientId.message}</p>
                     )}
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="px-4 py-2 bg-white border border-gray-200 text-gray-800 rounded-lg hover:bg-gray-50 transition-colors duration-200 w-full"
                 >
                     Save Project
                 </button>

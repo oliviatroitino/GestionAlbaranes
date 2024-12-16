@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import useProjects from '@/app/utils/useProjects'
+import Link from 'next/link'
 
 export default function ProjectList() {
     const router = useRouter()
@@ -11,14 +12,12 @@ export default function ProjectList() {
         <div className="max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-light text-gray-800 tracking-tight">Projects</h2>
-                <button
-                    onClick={() => router.push('/home/projects/add-project')}
-                    className="px-4 py-2 bg-white border border-gray-200 text-gray-800 
-                             rounded-lg hover:bg-gray-50 transition-colors duration-200 
-                             font-light"
-                >
+                <Link href="/home/projects/add-project" 
+                      className="px-4 py-2 bg-white border border-gray-200 text-gray-800 
+                                rounded-lg hover:bg-gray-50 transition-colors duration-200 
+                                font-light">
                     Add Project
-                </button>
+                </Link>
             </div>
 
             <div className="bg-white border border-gray-100 rounded-lg overflow-hidden">
