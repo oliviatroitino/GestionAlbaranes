@@ -1,9 +1,8 @@
 'use client'
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function SideBar({ onStateChange }) {
-    const router = useRouter();
     const [isOpen, setIsOpen] = useState(true);
 
     const toggleSidebar = () => {
@@ -18,48 +17,29 @@ export default function SideBar({ onStateChange }) {
         <>
             <button
                 onClick={toggleSidebar}
-                className="fixed top-20 left-4 z-50 text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700 flex items-center justify-center w-8 h-8"
+                className="fixed top-20 left-4 z-50 text-gray-600 bg-white border border-gray-200 
+                         p-2 rounded-md hover:bg-gray-50 flex items-center justify-center w-8 h-8 
+                         transition-colors duration-200"
             >
                 {isOpen ? '←' : '→'}
             </button>
-            <nav className={`bg-gray-800 h-screen fixed left-0 top-16 transition-all duration-300 ${
-                isOpen ? 'w-64' : 'w-14'
-            }`}>
+            <nav className={`bg-gray-50 border-r border-gray-200 h-screen fixed left-0 top-16 
+                           transition-all duration-300 ${isOpen ? 'w-64' : 'w-14'}`}>
                 <div className={`flex flex-col p-4 ${!isOpen && 'hidden'}`}>
-                    <div className="text-white font-bold text-xl mb-8 mt-10">
+                    <div className="text-gray-900 font-light text-xl mb-8 mt-10">
                         DeliveryNotes
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <button 
-                            onClick={() => router.push('/home')}
-                            className={`text-white hover:bg-gray-700 px-3 py-2 rounded text-left ${!isOpen && 'w-16'}`}
-                        >
-                            Home
-                        </button>
-                        <button 
-                            onClick={() => router.push('/home/clients')}
-                            className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
-                        >
-                            Clients
-                        </button>
-                        <button 
-                            onClick={() => router.push('/home/projects')}
-                            className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
-                        >
-                            Projects
-                        </button>
-                        <button 
-                            onClick={() => router.push('/home/delivery-notes')}
-                            className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
-                        >
-                            Delivery Notes
-                        </button>
-                        <button 
-                            onClick={() => router.push('/home/settings')}
-                            className="text-white hover:bg-gray-700 px-3 py-2 rounded text-left"
-                        >
-                            Settings
-                        </button>
+                        {['Home', 'Clients', 'Projects', 'Delivery Notes'].map((item) => (
+                            <Link
+                                key={item}
+                                href={`/home${item === 'Home' ? '' : `/${item.toLowerCase().replace(' ', '-')}`}`}
+                                className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded 
+                                         text-left transition-colors duration-200"
+                            >
+                                {item}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </nav>

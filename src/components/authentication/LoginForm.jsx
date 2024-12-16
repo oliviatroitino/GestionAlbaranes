@@ -17,36 +17,7 @@ export default function LoginForm() {
 
     async function onSubmit(data) {
         console.log(data);
-
-        // Previous version with token check first
-        // const token = localStorage.getItem('token');
-        // if(token){ // if there is a saved token, log in
-        //     try {
-        //         const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/login", {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'Authorization': `Bearer ${token}`
-        //             },
-        //             body: JSON.stringify(data)
-        //         });
-        //         if(response.ok){
-        //             console.log('User logged in successfully. Send to home.');
-        //             localStorage.setItem('login', true);
-        //             router.push('/home');
-        //         } else {
-        //             console.error('Error with POST user request:', response.status, '. Send to register.');
-        //             localStorage.setItem('login', false);
-        //             router.push('/register');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error with GET user request:', error);
-        //     }
-        // }else{ // if there is no saved token, send to register
-        //     console.error('No available token. Send to register.');
-        //     router.push('/register');
-        // }
-
+        
         try {
             const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/login", {
                 method: 'POST',
@@ -58,7 +29,7 @@ export default function LoginForm() {
 
             if(response.ok){
                 const result = await response.json();
-                localStorage.setItem('token', `Bearer ${result.token}`);
+                localStorage.setItem('token', `${result.token}`);
                 localStorage.setItem('login', true);
                 console.log('User logged in successfully. Send to home.');
                 router.push('/home');
@@ -74,24 +45,48 @@ export default function LoginForm() {
     }
 
     return(
-        <div className="w-full max-w-xs">
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+        <div className="max-w-sm mx-auto px-4">
+            <form className="bg-white border border-gray-100 rounded-lg p-8" 
+                  onSubmit={handleSubmit(onSubmit)}>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-500 mb-2" 
+                           htmlFor="email">
                         Email
                     </label>
-                    <input {...register('email')} placeholder='Introduce email' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></input>
-                    {errors.email && <p>{errors.email.message}</p>}
+                    <input 
+                        {...register('email')} 
+                        placeholder='Enter your email'
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg 
+                                 text-gray-800 focus:outline-none focus:border-gray-400 
+                                 transition-colors duration-200"
+                    />
+                    {errors.email && 
+                        <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+                    }
                 </div>
+
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                    <label className="block text-sm font-medium text-gray-500 mb-2" 
+                           htmlFor="password">
                         Password
                     </label>
-                    <input {...register('password')} placeholder='Introduce password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></input>
-                    {errors.password && <p>{errors.password.message}</p>}
+                    <input 
+                        {...register('password')} 
+                        type="password"
+                        placeholder='Enter your password'
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg 
+                                 text-gray-800 focus:outline-none focus:border-gray-400 
+                                 transition-colors duration-200"
+                    />
+                    {errors.password && 
+                        <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+                    }
                 </div>
+
                 <div className="flex items-center justify-between">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Accept</button>
+                    <button className="px-4 py-2 bg-white border border-gray-200 text-gray-800 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        Sign In
+                    </button>
                 </div>
             </form>
         </div>

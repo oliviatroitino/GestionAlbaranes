@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const SignSquema = Yup.object({
     code: Yup.string()
@@ -14,9 +14,10 @@ export default function ValidationForm() {
     const router = useRouter();
 
     async function onSubmit(data) {
-        console.log(data);
+        console.log("Validation form submitted with data:", data);
         try {
-            const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/validate", {
+            const token = localStorage.getItem('token');
+            const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/validation", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,30 +25,38 @@ export default function ValidationForm() {
                 },
                 body: JSON.stringify(data)
             });
-            if (response.ok) {
-                console.log('User validated successfully. Send to login.');
-                router.push('/home/login');
-            } else {
-                console.error('Error with PUT user request:', response);
-                // TODO: send to error page or register page
+            if (!response.ok) {
+                throw new Error('Failed to validate user');
             }
+            const result = await response.json();
+            localStorage.setItem('token', `${result.token}`);
+            router.push('/login');
         } catch (error) {
-            console.error('Error with PUT user request:', error);
+            console.error('Error:', error);
         }
     }
 
     return (
-        <div class="w-full max-w-xs">
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
+        <div className="max-w-sm mx-auto px-4">
+            <form className="bg-white border border-gray-100 rounded-lg p-8" onSubmit={handleSubmit(onSubmit)}>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-500 mb-2" htmlFor="code">
                         Validation Code
                     </label>
-                    <input {...register('code')} placeholder='Input code' type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></input>
-                    {errors.code && <p>{errors.code.message}</p>}
+                    <input 
+                        {...register('code')} 
+                        placeholder='Enter 6-digit code'
+                        type="text"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:border-gray-400 transition-colors duration-200"
+                    />
+                    {errors.code && 
+                        <p className="mt-1 text-sm text-red-500">{errors.code.message}</p>
+                    }
                 </div>
-                <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                <div className="flex items-center justify-between">
+                    <button className="px-4 py-2 bg-white border border-gray-200 text-gray-800 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        Validate Account
+                    </button>
                 </div>
             </form>
         </div>

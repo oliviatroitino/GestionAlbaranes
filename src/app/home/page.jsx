@@ -30,38 +30,63 @@ export default function HomePage() {
     }, [])
 
     return (
-        <div className="container mx-auto px-4">
-            {/* Statistics Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <Link href="/home/projects" className="bg-white rounded-lg shadow-sm p-6 border border-gray-300 hover:border-indigo-600">
-                    <h3 className="text-lg font-medium text-gray-800 mb-2">Total Projects</h3>
-                    <p className="text-3xl font-bold text-indigo-600">{projects?.length || 0}</p>
+        <div className="max-w-5xl mx-auto px-4">
+            {/* Main Hero Section */}
+            <div className="text-center py-12 mb-8">
+                <h1 className="text-5xl font-normal text-gray-800 tracking-tight mb-2">
+                    Welcome to GestionAlbaranes.
+                </h1>
+                <p className="text-xl text-gray-600 tracking-wide">
+                    Manage your projects efficiently.
+                </p>
+            </div>
+
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+                <Link href="/home/projects" 
+                    className="bg-white border border-gray-100 
+                             rounded p-6 text-center
+                             transition-all hover:shadow-sm">
+                    <h3 className="text-lg text-gray-800 mb-2">Projects</h3>
+                    <p className="text-4xl font-light text-gray-900">{projects?.length || 0}</p>
                 </Link>
-                <Link href="/home/clients" className="bg-white rounded-lg shadow-sm p-6 border border-gray-300 hover:border-indigo-600">
-                    <h3 className="text-lg font-medium text-gray-800 mb-2">Clients</h3>
-                    <p className="text-3xl font-bold text-indigo-600">{clients?.length || 0}</p>
+                
+                <Link href="/home/clients" 
+                    className="bg-white border border-gray-100 
+                             rounded p-6 text-center
+                             transition-all hover:shadow-sm">
+                    <h3 className="text-lg text-gray-800 mb-2">Clients</h3>
+                    <p className="text-4xl font-light text-gray-900">{clients?.length || 0}</p>
                 </Link>
-                <Link href="/home/delivery-notes" className="bg-white rounded-lg shadow-sm p-6 border border-gray-300 hover:border-indigo-600">
-                    <h3 className="text-lg font-medium text-gray-800 mb-2">Delivery Notes</h3>
-                    <p className="text-3xl font-bold text-indigo-600">{deliveryNotes?.length || 0}</p>
+                
+                <Link href="/home/delivery-notes" 
+                    className="bg-white border border-gray-100 
+                             rounded p-6 text-center
+                             transition-all hover:shadow-sm">
+                    <h3 className="text-lg text-gray-800 mb-2">Delivery Notes</h3>
+                    <p className="text-4xl font-light text-gray-900">{deliveryNotes?.length || 0}</p>
                 </Link>
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-300">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h2>
+            <div className="bg-white border border-gray-100 rounded-lg p-8">
+                <h2 className="text-2xl font-light text-gray-900 mb-6">Recent Activity</h2>
                 <div className="space-y-4">
                     {deliveryNotes.slice(0, 5).map((note) => (
-                        <div key={note._id} className="flex items-center justify-between border-b border-gray-300 pb-4">
+                        <div key={note._id} 
+                             className="flex items-center justify-between py-3 border-b border-gray-100 
+                                        last:border-b-0">
                             <div>
                                 <Link href={`/home/delivery-notes/${note._id}`}>
-                                    <p className="font-medium text-gray-800 hover:text-indigo-600 cursor-pointer">{note.description}</p>
+                                    <p className="text-gray-800 hover:text-blue-600">{note.description}</p>
                                 </Link>
                                 <p className="text-sm text-gray-500">
-                                    {note.projectId?.name} - {clients.find(client => client._id === note.clientId || client._id === Number(note.clientId))?.name || 'Unknown Client'}
+                                    {note.projectId?.name} - {clients.find(client => 
+                                        client._id === note.clientId || 
+                                        client._id === Number(note.clientId))?.name || 'Unknown Client'}
                                 </p>
                             </div>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-400">
                                 {new Date(note.workdate).toLocaleDateString()}
                             </span>
                         </div>

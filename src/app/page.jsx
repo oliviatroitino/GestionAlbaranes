@@ -9,7 +9,7 @@ export default function HomePage() {
             {localStorage.getItem('login') ? (
                 router.push('/home')
             ) : (
-                router.push('/login')
+                router.push('/register')
             )}
         </div>
     )

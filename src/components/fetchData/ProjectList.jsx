@@ -8,44 +8,52 @@ export default function ProjectList() {
     const { projects } = useProjects()
 
     return (
-        <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Project List</h2>
-            <div className="overflow-x-auto">
+        <div className="max-w-5xl mx-auto">
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-light text-gray-800 tracking-tight">Projects</h2>
+                <button
+                    onClick={() => router.push('/home/projects/add-project')}
+                    className="px-4 py-2 bg-white border border-gray-200 text-gray-800 
+                             rounded-lg hover:bg-gray-50 transition-colors duration-200 
+                             font-light"
+                >
+                    Add Project
+                </button>
+            </div>
+
+            <div className="bg-white border border-gray-100 rounded-lg overflow-hidden">
                 {projects?.length > 0 ? (
-                    <table className="min-w-full bg-white">
+                    <table className="min-w-full">
                         <thead>
                             <tr>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Name</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Project Identifier</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Email</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Address</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Internal Project Code</th>
-                                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 font-medium text-gray-900 uppercase tracking-wider">Client ID</th>
+                                <th className="px-6 py-3 border-b border-gray-100 text-left 
+                                           text-sm font-medium text-gray-500">
+                                    Project Name
+                                </th>
+                                <th className="px-6 py-3 border-b border-gray-100 text-left 
+                                           text-sm font-medium text-gray-500">
+                                    Project Code
+                                </th>
+                                <th className="px-6 py-3 border-b border-gray-100 text-left 
+                                           text-sm font-medium text-gray-500">
+                                    Client
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {projects.map((project) => (
                                 <tr 
-                                    key={project._id}
+                                    key={`${project._id}-${project.projectCode}`}
                                     onClick={() => router.push(`/home/projects/${project._id}`)}
-                                    className="hover:bg-gray-50 cursor-pointer"
+                                    className="hover:bg-gray-50 cursor-pointer transition-colors duration-200"
                                 >
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
+                                    <td className="px-6 py-4 border-b border-gray-100 text-gray-800">
                                         {project.name}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
+                                    <td className="px-6 py-4 border-b border-gray-100 text-gray-500">
                                         {project.projectCode}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {project.email}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {`${project.address.street} ${project.address.number}, ${project.address.postal} ${project.address.city}`}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
-                                        {project.code}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300 text-gray-500">
+                                    <td className="px-6 py-4 border-b border-gray-100 text-gray-500">
                                         {project.clientId}
                                     </td>
                                 </tr>
@@ -53,17 +61,26 @@ export default function ProjectList() {
                         </tbody>
                     </table>
                 ) : (
-                    <div className="text-center py-8">
-                        <p className="text-gray-500 text-lg">No projects found</p>
-                        <p className="text-gray-400 mt-2">Click the button below to add your first project</p>
+                    <div className="text-center py-12">
+                        <svg 
+                            className="mx-auto h-12 w-12 text-gray-400 mb-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={1}
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                            />
+                        </svg>
+                        <p className="text-gray-500 text-lg font-light mb-2">No projects found</p>
+                        <p className="text-sm text-gray-400">
+                            Click the button above to add your first project
+                        </p>
                     </div>
                 )}
-                <button
-                    onClick={() => router.push('/home/projects/add-project')}
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Add Project
-                </button>
             </div>
         </div>
     )

@@ -16,75 +16,71 @@ export default function RegisterForm() {
     const router = useRouter();
 
     async function onSubmit(data) {
-        console.log(data);
-
-        // check if the user exists
-        const token = localStorage.getItem('token');
-        if(token) { // 1. if the token is set, we check if there is a user with that token
-            try {
-                const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user", {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(data)
-                });
-                console.log('User exists, go to login')
-                // if the user exists and there is no error in the get request, send to login
-                router.push("/home/login");
-            } catch (error) {
-                console.error('Error with GET user request:', error);
-                // no user exists with that token, register the user
-                localStorage.removeItem('token'); // remove the error token...
-                onSubmit(data); // ...and register the user
+        console.log('Form submitted with data:', data);
+        try {
+            const response = await fetch('https://bildy-rpmaya.koyeb.app/api/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to register user');
             }
-        } else { // 2. if there is no token, we register the user
-            try {
-                const response = await fetch("https://bildy-rpmaya.koyeb.app/api/user/register", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to register user');
-                }
-    
-                const result = await response.json();
-                localStorage.setItem('token', `Bearer${result.token}`);
-    
-                console.log('Register request sent successfully. Moving on to validation.');
-                router.push('/home/register/validation');
-    
-            } catch (error) {
-                console.error('Error with register POST request:', error);
-            }
+            const result = await response.json();
+            localStorage.setItem('token', `Bearer ${result.token}`);
+            router.push('/register/validation');
+        } catch (error) {
+            console.error('Error:', error);
         }
     }
 
-    return(
-        <div className="w-full max-w-xs">
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+    return (
+        <div className="max-w-sm mx-auto px-4">
+            <form className="bg-white border border-gray-100 rounded-lg p-8" 
+                  onSubmit={handleSubmit(onSubmit)}>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-500 mb-2" 
+                           htmlFor="email">
                         Email
                     </label>
-                    <input {...register('email')} placeholder='Introduce email' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></input>
-                    {errors.email && <p>{errors.email.message}</p>}
+                    <input 
+                        {...register('email')} 
+                        placeholder='Enter your email'
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg 
+                                 text-gray-800 focus:outline-none focus:border-gray-400 
+                                 transition-colors duration-200"
+                    />
+                    {errors.email && 
+                        <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+                    }
                 </div>
+
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                    <label className="block text-sm font-medium text-gray-500 mb-2" 
+                           htmlFor="password">
                         Password
                     </label>
-                    <input {...register('password')} placeholder='Introduce password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></input>
-                    {errors.password && <p>{errors.password.message}</p>}
+                    <input 
+                        {...register('password')} 
+                        type="password"
+                        placeholder='Enter your password'
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg 
+                                 text-gray-800 focus:outline-none focus:border-gray-400 
+                                 transition-colors duration-200"
+                    />
+                    {errors.password && 
+                        <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+                    }
                 </div>
+
                 <div className="flex items-center justify-between">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Accept</button>
+                    <button className="px-4 py-2 bg-white border border-gray-200 text-gray-800 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        Create Account
+                    </button>
                 </div>
             </form>
         </div>
-    )
+    );
 }
